@@ -7,8 +7,15 @@ const router = express.Router();
 
 
 
-router.get('/', (req, res) => {
-    res.send({mesage: "hello world from admin"})
+// get all admins
+
+router.get("/", async (req, res) => {
+    try {
+        const admins = await prisma.admin.findMany();
+        return res.status(200).json(admins);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
 }
 );
 
